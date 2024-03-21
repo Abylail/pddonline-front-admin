@@ -5,7 +5,7 @@
       <h1 class="page__title" v-if="isNew">Создание департамента</h1>
       <h1 class="page__title" v-else>Департамент</h1>
       <v-spacer/>
-      <v-btn color="primary" :loading="isLoading" small @click="saveHandle()">Сохранить</v-btn>
+      <v-btn color="primary" :loading="isLoading" :disabled="!canSave" small @click="saveHandle()">Сохранить</v-btn>
     </div>
 
     <div class="relative-columns-2">
@@ -46,6 +46,11 @@ export default {
 
     departmentId() {
       return this.$route.params.id;
+    },
+
+    // Можно ли сохранять (валидвция)
+    canSave() {
+      return this.department?.location && this.department?.name &&  this.department?.address;
     }
   },
   methods: {
