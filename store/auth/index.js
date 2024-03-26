@@ -48,7 +48,7 @@ export const actions = {
   // Логин через username ang password
   async login({ commit, dispatch, getters }, {number, password}) {
     if (!number || !password) return;
-    await this.$api.$post("/users/auth/login-staff/", {number, password})
+    await this.$api.$post("/rescuers/login/", {number, password})
       .then(({err, access, refresh}) => {
         if (!err) {
           commit("set", ["userInfo", {phone_number: number}]);
