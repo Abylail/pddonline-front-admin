@@ -5,6 +5,6 @@ export const rolesDict = {
   },
   gbr: {
     "title": "ГБР",
-    "code": "gbr"
+    "code": "GBR_ROLE"
   }
 }

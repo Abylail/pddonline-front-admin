@@ -17,6 +17,10 @@ export default {
     value: {
       type: Object,
       default: null
+    },
+    editable: {
+      type: Boolean,
+      default: true
     }
   },
   data: () => ({
@@ -60,7 +64,7 @@ export default {
 
     // Клик на карте
     mapOnClick(event) {
-      this.innerValue = event.get('coords');
+      if (this.editable) this.innerValue = event.get('coords');
     },
   },
   mounted() {

@@ -53,7 +53,7 @@ export default {
     }),
 
     userFullName() {
-      if (this.userInfo.first_name || this.userInfo.last_name) return `${this.userInfo.first_name} ${this.userInfo.last_name}`
+      if (this.userInfo?.first_name || this.userInfo?.last_name) return `${this.userInfo.first_name} ${this.userInfo.last_name}`
       return "Неизвестный"
     },
 
@@ -68,8 +68,7 @@ export default {
     links() {
       return [
         { icon: "mdi-account-circle", name: "Мой профиль", route: "/gbr/profile", roles: [rolesDict.gbr.code]},
-        { icon: "mdi-domain", name: "Моя департамент", route: "/gbr/department", roles: [rolesDict.gbr.code]},
-        { icon: "mdi-domain", name: "Заявки", route: "/gbr/requests", roles: [rolesDict.gbr.code]},
+        { icon: "mdi-format-list-bulleted", name: "Заявки", route: "/gbr/requests", roles: [rolesDict.gbr.code]},
 
         { icon: "mdi-domain", name: "Департаменты", route: "/admin/departments", roles: [rolesDict.admin.code]},
         { icon: "mdi-account-multiple", name: "Пользователи", route: "/admin/users", roles: [rolesDict.admin.code]},
