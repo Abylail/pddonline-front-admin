@@ -72,6 +72,7 @@ export default {
 
         { icon: "mdi-domain", name: "Департаменты", route: "/admin/departments", roles: [rolesDict.admin.code]},
         { icon: "mdi-account-multiple", name: "Пользователи", route: "/admin/users", roles: [rolesDict.admin.code]},
+        { icon: "mdi-format-list-bulleted", name: "Заявки", route: "/admin/requests", roles: [rolesDict.admin.code]},
       ]
     }
   },
