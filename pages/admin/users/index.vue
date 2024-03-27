@@ -15,8 +15,11 @@
       disable-pagination
       @click:row="goUser($event)"
     >
+      <template  v-slot:item.fio="{ item }">
+        <span v-if="item.user">{{ item.user?.last_name }} {{ item.user?.first_name }}</span>
+      </template>
       <template  v-slot:item.department="{ item }">
-        <span v-if="item.department">{{ item.department?.name }} ({{ item.department?.address }})</span>
+        <span v-if="item.department">{{ item.department_full?.name }} ({{ item.department_full?.address }})</span>
       </template>
     </v-data-table>
   </div>
@@ -31,8 +34,8 @@ export default {
     isLoading: false,
 
     tableHeaders: [
-      { text: 'Имя', value: 'first_name', sortable: false},
-      { text: 'Фамилия', value: 'last_name', sortable: false},
+      { text: 'ФИО', value: 'fio', sortable: false},
+      { text: 'Номер', value: 'user.phone_number', sortable: false},
       { text: 'Департамент', value: 'department', sortable: false},
     ]
   }),
@@ -53,7 +56,7 @@ export default {
     },
 
     goUser(user) {
-      this.$router.push(`/admin/users/edit/${user.id}`)
+      this.$router.push(`/admin/users/edit/${user.pk}`)
     }
   },
   mounted() {
