@@ -1,7 +1,7 @@
 <template>
   <div class="base-yandex-map">
     <h2 class="base-yandex-map__title" v-if="title">{{ title }}</h2>
-    <div class="base-yandex-map__map" id="base-yandex-map"/>
+    <div class="base-yandex-map__map" :id="uniqId"/>
   </div>
 </template>
 
@@ -21,6 +21,10 @@ export default {
     editable: {
       type: Boolean,
       default: true
+    },
+    search: {
+      type: Boolean,
+      default: true
     }
   },
   data: () => ({
@@ -35,6 +39,16 @@ export default {
       set(coords) {
         this.$emit("input", {latitude: coords[0], longitude: coords[1]});
       }
+    },
+
+    uniqId() {
+      return Math.random().toString(36).substring(2,10);
+    },
+
+    controls() {
+      let controls = ["zoomControl"];
+      if (this.search) controls.push("searchControl");
+      return controls
     }
   },
   watch: {
@@ -47,10 +61,10 @@ export default {
   methods: {
     init() {
       // Инициализация карты
-      this.map = new ymaps.Map("base-yandex-map", {
+      this.map = new ymaps.Map(this.uniqId, {
         center: this.innerValue || almatyCenterCoords,
         zoom: this.innerValue ? 14 : 12,
-        controls: ["zoomControl", "searchControl"],
+        controls: this.controls,
       });
 
       // Случаю клик
