@@ -14,7 +14,7 @@
         <v-card-title>
           <div>{{ statusDict[request.status] }} {{ request.createdAt | dateTimeFormat }}</div>
           <v-spacer/>
-          <v-btn v-if="!request.executor && isCreated(request)" color="primary" @click.stop="acceptRequest(request)">Принять</v-btn>
+          <v-btn v-if="!request.executor || isCreated(request)" color="primary" @click.stop="acceptRequest(request)">Принять</v-btn>
         </v-card-title>
         <v-card-subtitle>
           <div v-if="request.author_comment">Клиент: {{ request.author_comment }}</div>
