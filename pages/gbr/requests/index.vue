@@ -2,23 +2,26 @@
   <div class="page requests">
     <div class="page__head">
       <h1 class="page__title">Заявки</h1>
-      <v-btn color="primary" small outlined @click="$router.push(`/gbr/requests/edit`)">Добавить пользователя +</v-btn>
     </div>
 
     <div class="requests__list">
       <v-card
         class="requests__item"
-        :class="{'requests__item--warn': request.status === 'CREATED'}"
+        :class="{'requests__item--warn': isCreated(request)}"
         v-for="request in requests" :key="request.id"
         @click="goRequest(request)"
       >
-        <v-card-title>{{ statusDict[request.status] }} {{ request.createdAt | dateTimeFormat }}</v-card-title>
+        <v-card-title>
+          <div>{{ statusDict[request.status] }} {{ request.createdAt | dateTimeFormat }}</div>
+          <v-spacer/>
+          <v-btn v-if="!request.executor && isCreated(request)" color="primary" @click.stop="acceptRequest(request)">Принять</v-btn>
+        </v-card-title>
         <v-card-subtitle>
           <div v-if="request.author_comment">Клиент: {{ request.author_comment }}</div>
           <div v-if="request.executor_comment">От исполнителя: {{ request.executor_comment }}</div>
         </v-card-subtitle>
 
-        <v-card-text v-if="request.status === 'CREATED'">
+        <v-card-text v-if="!isFinished(request)">
           <base-yandex-map
             :value="request.current_location"
             :editable="false"
@@ -45,6 +48,8 @@ export default {
       IN_PROGRESS: "Выполняется",
       FINISHED: "Завершена",
     },
+
+    interval: null,
   }),
   computed: {
     ...mapGetters({
@@ -54,7 +59,23 @@ export default {
   methods: {
     ...mapActions({
       _fetchList: "gbr/requests/fetchList",
+      _acceptRequest: "gbr/requests/acceptRequest",
     }),
+
+    // Принять
+    acceptRequest(request) {
+      this.isLoading = true;
+      this._acceptRequest({id: request.id});
+      this.isLoading = false;
+    },
+
+    isCreated(request) {
+      return request.status === "CREATED";
+    },
+
+    isFinished(request) {
+      return request.status === "FINISHED";
+    },
 
     async fetchList() {
       this.isLoading = true;
@@ -68,6 +89,10 @@ export default {
   },
   mounted() {
     this.fetchList();
+    this.interval = setInterval(() => this.fetchList(), 10000);
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   }
 }
 </script>

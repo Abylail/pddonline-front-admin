@@ -18,6 +18,7 @@ export const getters = {
 
   getUserInfo: state => state.userInfo,
 
+  getUserId: state => state.userInfo?.id,
   getRole: state => state.userInfo?.role,
 
   isAdmin: state => state.userInfo?.role === rolesDict.admin.code,

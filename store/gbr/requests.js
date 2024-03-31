@@ -35,6 +35,19 @@ export const actions = {
     })
   },
 
+  // Принять
+  async acceptRequest({rootGetters, dispatch}, {id}) {
+    const {pk} = await dispatch("gbr/profile/fetchInfo", null, {root: true})
+    await this.$api.$put(`/emergency/calls/${id}/`, {executor: pk, status: "IN_PROGRESS"})
+      .then((response) => {
+        if (!response.err) {
+          this.$toast.success("Заявку принята");
+          this.$router.push(`/gbr/requests/edit/${id}`)
+        }
+        else this.$toast.error("Ошибка принятия")
+      })
+  },
+
   // создать запрос (возвращает успешно ли)
   createRequest({ commit }, {user}) {
     return new Promise(resolve => {

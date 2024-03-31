@@ -1,5 +1,5 @@
 <template>
-  <div class="base-yandex-map">
+  <div class="base-yandex-map" @click.stop>
     <h2 class="base-yandex-map__title" v-if="title">{{ title }}</h2>
     <div class="base-yandex-map__map" :id="uniqId"/>
   </div>

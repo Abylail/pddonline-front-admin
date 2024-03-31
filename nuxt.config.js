@@ -35,6 +35,10 @@ export default {
     "~/plugins/yandex",
   ],
 
+  router: {
+    base: process.env.BASE_URL
+  },
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
