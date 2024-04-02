@@ -16,7 +16,7 @@ export const mutations = {
 export const actions = {
   // Запросить список департаментов
   async fetchList({ commit }) {
-    await this.$api.$get("/emergency/departments/")
+    await this.$api.$get("/rescuers/departments/")
       .then((response) => {
         if (!response.err) {
           commit("setList", response);
@@ -27,7 +27,7 @@ export const actions = {
   // Запросить департамент по id
   fetchSingle({}, id) {
     return new Promise(resolve => {
-      this.$api.$get(`/emergency/departments/${id}/`)
+      this.$api.$get(`/rescuers/departments/${id}/`)
         .then((response) => {
           if (!response.err) resolve(response);
           else resolve(null);
@@ -38,7 +38,7 @@ export const actions = {
   // Запросить создать департамент (возвращает успешно ли)
   createDepartment({ commit }, {department}) {
     return new Promise(resolve => {
-      this.$api.$post("/emergency/departments/", department)
+      this.$api.$post("/rescuers/departments/", department)
         .then((response) => {
           resolve(!response.err);
         })
@@ -48,7 +48,7 @@ export const actions = {
   // Запросить создать департамент (возвращает успешно ли)
   updateDepartment({ commit }, {department, id}) {
     return new Promise(resolve => {
-      this.$api.$put(`/emergency/departments/${id}/`, department)
+      this.$api.$put(`/rescuers/departments/${id}/`, department)
         .then((response) => {
           resolve(!response.err);
         })

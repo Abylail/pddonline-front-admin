@@ -37,7 +37,7 @@ export default {
         return [this.value.latitude, this.value.longitude]
       },
       set(coords) {
-        this.$emit("input", {latitude: coords[0], longitude: coords[1]});
+        this.$emit("input", {...this.value, latitude: coords[0], longitude: coords[1]});
       }
     },
 
