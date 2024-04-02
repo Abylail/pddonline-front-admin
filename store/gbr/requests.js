@@ -19,7 +19,7 @@ export const actions = {
     await this.$api.$get("/emergency/calls/")
       .then((response) => {
         if (!response.err) {
-          commit("setList", response);
+          commit("setList", response.results);
         }
       })
   },
@@ -64,6 +64,15 @@ export const actions = {
       this.$api.$put(`/emergency/calls/${id}/`, user)
         .then((response) => {
           resolve(!response.err);
+        })
+    })
+  },
+
+  getClient({ commit }, id) {
+    return new Promise(resolve => {
+      this.$api.$get(`/clients/${id}/`)
+        .then((response) => {
+          resolve(response.user);
         })
     })
   },

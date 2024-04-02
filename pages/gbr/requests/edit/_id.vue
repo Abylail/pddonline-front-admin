@@ -5,6 +5,14 @@
       <h1 class="page__title">Заявка <span v-if="info">({{ statusDict[info.status] }})</span></h1>
     </div>
 
+    <v-card :loading="isClientLoading">
+      <v-card-title>Клиент</v-card-title>
+      <v-card-text>
+        <div>{{ client.first_name }} {{ client.last_name }}</div>
+        <div>{{ client.phone_number }}</div>
+      </v-card-text>
+    </v-card>
+
     <div v-if="info">
       <div class="relative-columns-2">
       <v-text-field
@@ -39,8 +47,11 @@ export default {
     info: null,
 
     isLoading: false,
+    isClientLoading: false,
 
     interval: null,
+
+    client: {},
 
     statusDict: {
       CREATED: "Примите заявку",
@@ -56,16 +67,24 @@ export default {
   methods: {
     ...mapActions({
       _fetchInfo: "gbr/requests/fetchSingle",
+      _getClient: "gbr/requests/getClient",
     }),
 
     async fetchInfo() {
       this.isLoading = true;
       this.info = await this._fetchInfo(this.requestId);
       this.isLoading = false;
+    },
+
+    async getClient(authorId = this.info.author) {
+      this.isClientLoading = true;
+      this.client = await this._getClient(authorId);
+      this.isClientLoading = false;
     }
   },
-  mounted() {
-    this.fetchInfo()
+  async mounted() {
+    await this.fetchInfo();
+    this.getClient()
     this.interval = setInterval(() => this.fetchInfo(), 10000)
   },
   beforeDestroy() {

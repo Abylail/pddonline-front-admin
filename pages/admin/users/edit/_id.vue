@@ -42,7 +42,7 @@
     <v-autocomplete
       v-model="rescuer.department"
       :items="departments"
-      :item-text="d => `${d.name} (${d.address})`"
+      :item-text="d => `${d.name} (${d.location?.address})`"
       item-value="id"
       dense outlined
       label="Департамент"

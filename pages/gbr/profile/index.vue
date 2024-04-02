@@ -28,7 +28,7 @@
       />
       <v-text-field
         label="Департамент"
-        :value="`${info.department_full.name} (${info.department_full.address})`"
+        :value="`${info.department_full.name} (${info.department_full.location?.address})`"
         outlined dense disabled
       />
     </div>

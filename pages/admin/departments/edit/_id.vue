@@ -16,7 +16,7 @@
       />
       <v-text-field
         label="Адрес"
-        v-model="department.address"
+        v-model="department.location.address"
         outlined dense
       />
     </div>
@@ -35,7 +35,7 @@ export default {
   name: "index",
   components: {BaseYandexMap},
   data: () => ({
-    department: {},
+    department: {location: {}},
     isLoading: false
   }),
   computed: {
@@ -50,7 +50,7 @@ export default {
 
     // Можно ли сохранять (валидвция)
     canSave() {
-      return this.department?.location && this.department?.name &&  this.department?.address;
+      return this.department?.location && this.department?.name &&  this.department?.location?.address;
     }
   },
   methods: {

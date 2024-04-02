@@ -19,7 +19,7 @@
         <span v-if="item.user">{{ item.user?.last_name }} {{ item.user?.first_name }}</span>
       </template>
       <template  v-slot:item.department="{ item }">
-        <span v-if="item.department">{{ item.department_full?.name }} ({{ item.department_full?.address }})</span>
+        <span v-if="item.department">{{ item.department_full?.name }} ({{ item.department_full?.location?.address }})</span>
       </template>
     </v-data-table>
   </div>

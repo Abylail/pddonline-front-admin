@@ -28,7 +28,7 @@ export default {
 
     tableHeaders: [
       { text: 'Название', value: 'name', sortable: false},
-      { text: 'Адрес', value: 'address', sortable: false},
+      { text: 'Адрес', value: 'location.address', sortable: false},
     ]
   }),
   computed: {
