@@ -15,6 +15,7 @@
           <div>{{ statusDict[request.status] }} {{ request.createdAt | dateTimeFormat }}</div>
           <v-spacer/>
           <v-btn v-if="!request.executor || isCreated(request)" color="primary" @click.stop="acceptRequest(request)">Принять</v-btn>
+          <v-btn v-if="!request.executor || isClientFinished(request)" color="primary" @click.stop="goFinishRequest(request)">Перейти к завершению</v-btn>
         </v-card-title>
         <v-card-subtitle>
           <div v-if="request.author_comment">Клиент: {{ request.author_comment }}</div>
@@ -46,6 +47,9 @@ export default {
     statusDict: {
       CREATED: "Примите заявку",
       IN_PROGRESS: "Выполняется",
+      CLIENT_CONFIRMED: "Клиент завершил",
+      GBR_CONFIRMED: "Завершена",
+      ADMIN_CONFIRMED: "Завершена",
       FINISHED: "Завершена",
     },
 
@@ -54,7 +58,7 @@ export default {
   computed: {
     ...mapGetters({
       requests: "gbr/requests/getList",
-    })
+    }),
   },
   methods: {
     ...mapActions({
@@ -69,12 +73,20 @@ export default {
       this.isLoading = false;
     },
 
+    goFinishRequest(request) {
+      this.$router.push(`/gbr/requests/edit/${request.id}?finish=true`)
+    },
+
     isCreated(request) {
       return request.status === "CREATED";
     },
 
+    isClientFinished(request) {
+      return request.status === "CLIENT_CONFIRMED";
+    },
+
     isFinished(request) {
-      return request.status === "FINISHED";
+      return ["GBR_CONFIRMED", "ADMIN_CONFIRMED", "FINISHED"].includes(request.status);
     },
 
     async fetchList() {

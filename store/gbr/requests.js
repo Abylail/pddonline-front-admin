@@ -48,6 +48,19 @@ export const actions = {
       })
   },
 
+  // Принять
+  async finishRequest({rootGetters, dispatch}, {id, comment}) {
+    const {pk} = await dispatch("gbr/profile/fetchInfo", null, {root: true})
+    await this.$api.$put(`/emergency/calls/${id}/`, {executor: pk, status: "GBR_CONFIRMED", executor_comment: comment})
+      .then((response) => {
+        if (!response.err) {
+          this.$toast.success("Заявка завершена");
+          this.$router.push(`/gbr/requests/edit/${id}`)
+        }
+        else this.$toast.error("Ошибка завершения")
+      })
+  },
+
   // создать запрос (возвращает успешно ли)
   createRequest({ commit }, {user}) {
     return new Promise(resolve => {
