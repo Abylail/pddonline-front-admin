@@ -10,9 +10,7 @@ const createUrl = url => url;
 
 /** Создание options */
 const createOptions = (options, store) => {
-  let headers = options.headers || {};
-  if (store.getters['auth/getToken']) headers['Authorization'] = `Bearer ${store.getters['auth/getToken']}`
-  return {...options, headers}
+  return {...options}
 }
 
 /** GET */

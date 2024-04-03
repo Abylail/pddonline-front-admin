@@ -32,7 +32,6 @@ export default {
     "~/plugins/external",
     "~/plugins/apiLayer",
     "~/plugins/filters",
-    "~/plugins/yandex",
   ],
 
   router: {

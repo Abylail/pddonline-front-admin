@@ -8,7 +8,7 @@
         <!-- phone -->
         <base-phone-input
           label="Телефон"
-          v-model="authData.number"
+          v-model="authData.phone"
           ref="phoneInput"
           outlined
         />
@@ -49,7 +49,7 @@ export default {
     isLoading: false,
 
     authData: {
-      number: null,
+      phone: null,
       password: null,
     },
 
@@ -66,11 +66,11 @@ export default {
 
     },
     async loginHandle() {
-      if (!this.authData.number || !this.authData.password) return;
+      if (!this.authData.phone || !this.authData.password) return;
       this.isLoading = true;
       this.showPassword = false;
       await this._login({
-        number: this.authData.number,
+        phone: this.authData.phone,
         password: this.authData.password,
       })
       this.isLoading = false;

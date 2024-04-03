@@ -9,7 +9,7 @@
       </v-avatar>
         <div>
           <div class="navigation-bar__name">{{ userFullName }}</div>
-          <div class="navigation-bar__role">{{ roleDescription }}</div>
+          <div class="navigation-bar__role">Админ</div>
         </div>
       </div>
     </v-sheet>
@@ -17,8 +17,7 @@
     <!-- LINKS -->
     <v-list>
       <v-list-item
-        v-for="({icon, name, route, roles}, index) in links"
-        v-show="roleAccess(roles)"
+        v-for="({icon, name, route}, index) in links"
         :key="index"
         :to="route"
         link
@@ -37,7 +36,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {rolesDict} from "~/config/roleDict";
 
 export default {
   name: "defaultNavigationBar",
@@ -48,7 +46,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      role: "auth/getRole",
       userInfo: "auth/getUserInfo",
     }),
 
@@ -57,29 +54,12 @@ export default {
       return "Неизвестный"
     },
 
-    // Роль на русском
-    roleDescription() {
-      return {
-        [rolesDict.admin.code]: "Администратор",
-        [rolesDict.gbr.code]: "ГБР",
-      }[this.role] || "";
-    },
-
     links() {
       return [
-        { icon: "mdi-account-circle", name: "Мой профиль", route: "/gbr/profile", roles: [rolesDict.gbr.code]},
-        { icon: "mdi-format-list-bulleted", name: "Заявки", route: "/gbr/requests", roles: [rolesDict.gbr.code]},
-
-        { icon: "mdi-domain", name: "Департаменты", route: "/admin/departments", roles: [rolesDict.admin.code]},
-        { icon: "mdi-account-multiple", name: "Пользователи", route: "/admin/users", roles: [rolesDict.admin.code]},
+        { icon: "mdi-account-circle", name: "Вопросы", route: "/admin/questions"},
       ]
     }
   },
-  methods: {
-    roleAccess(linkRoles) {
-      return linkRoles.includes(this.role);
-    }
-  }
 }
 </script>
 
